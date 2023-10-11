@@ -1,5 +1,4 @@
-﻿using Entities.ServiceResponse;
-using IService.ICateReviewSer;
+﻿using IService.ICateReviewSer;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -10,6 +9,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Entities.Model;
 using Utility;
+using Entities.ResponseModel;
 
 namespace ReviewLandApp.Controllers
 {
@@ -24,79 +24,66 @@ namespace ReviewLandApp.Controllers
         }
 
         [HttpPost("paging")]
-        public async Task<ServiceResponse> GetListCategoryReview([FromBody] Dictionary<string, object> pagingRequest)
+        public async Task<APIResult> GetListCategoryReview([FromBody] Dictionary<string, object> pagingRequest)
         {
             try
             {
-                ServiceResponse serviceResponse = new ServiceResponse();
-                var skip = pagingRequest.Get<int>("Skip");
-                var take = pagingRequest.Get<int>("Take");
+                var skip = pagingRequest.Get<int>("skip");
+                var take = pagingRequest.Get<int>("take");
                 var searchKey = pagingRequest.Get<string>("searchKey");
                 var result = await _cateReviewSer.GetListCateReview(skip, take, searchKey);
-                serviceResponse.Data = result;
-                return ResultResponse.HandleReturnReponse(true, serviceResponse.Data);
+                return new APIResult<object>(result, true, "Get success");
             }
             catch (Exception ex)
             {
-                return ResultResponse.HandleReturnReponse(false, ex.Message);
+                return new APIResult(false, ex.Message);
             }
         }
 
         [HttpPost]
-        public async Task<ServiceResponse> SaveCategoryReview([FromBody] CategoryReview entity)
+        public async Task<APIResult> SaveCategoryReview([FromBody] CategoryReview entity)
         {
-            ServiceResponse response = new ServiceResponse();
             try
             {
-                var result = _cateReviewSer.SaveCateReview(entity);
-                return new ServiceResponse
-                {
-                    Data = "123",
-                    Success = true,
-                    Message = "Success"
-                };
+                var result = await _cateReviewSer.SaveCateReview(entity);
+                return new APIResult(true, "Save success");
             }
             catch (Exception ex)
             {
-                return new ServiceResponse
-                {
-                    Data = "123",
-                    Success = false,
-                    Message = ex.Message
-                };
+                return new APIResult(false, ex.Message);
+
             }
         }
 
         [HttpGet("{id}")]
-        public async Task<ServiceResponse> HandleGetDetailCate(string id)
+        public async Task<APIResult> HandleGetDetailCate(string id)
         {
             try
             {
                 Dictionary<string, object> dic = new Dictionary<string, object>();
                 dic.Add("ID", id);
                 var result = await _cateReviewSer.GetCateReviewById(dic);
-                return ResultResponse.HandleReturnReponse(true, result);
+                return new APIResult<CategoryReview>(result, true, "Get success");
             }
             catch (Exception ex)
             {
-                return ResultResponse.HandleReturnReponse(false, ex.Message);
+                return new APIResult(false, ex.Message);
             }
         }
 
         [HttpPost("{id}")]
-        public async Task<ServiceResponse> HandleDeleteCate(string id)
+        public async Task<APIResult> HandleDeleteCate(string id)
         {
-            ServiceResponse serviceResponse = new ServiceResponse();
             try
             {
                 Dictionary<string, object> dic = new Dictionary<string, object>();
                 dic.Add("id", id);
                 var result = await _cateReviewSer.DeleteCateReview(dic);
-                return ResultResponse.HandleReturnReponse(true, result);
+                return new APIResult(true, "Delete success");
             }
             catch (Exception ex)
             {
-                return ResultResponse.HandleReturnReponse(true, ex.Message);
+                return new APIResult(false, ex.Message);
             }
         }
     }

@@ -7,8 +7,8 @@ namespace Entities.Model
 {
     public class ListRentedHouse:BaseModel
     {
-        public string Id_list_rented_house { get; set; }
+        public string IdListRentedHouse { get; set; }
         public string Title { get; set; }
-        public string Id_cate_review { get; set; }
+        public string IdCateReview { get; set; }
     }
 }

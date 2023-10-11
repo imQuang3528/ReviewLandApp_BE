@@ -6,14 +6,14 @@ namespace Entities.Base
 {
     public class BaseModel
     {
-        public int SKIP { get; set; }
-        public int TAKE { get; set; }
-        public int TOTALRECORD { get; set; }
-        public string CREATED_BY { get; set; }
-        public DateTime? CREATED_DATE { get; set; }
-        public string UPDATED_BY { get; set; }
-        public DateTime? UPDATED_DATE { get; set; }
-        public int? STATUS { get; set; }
-        public int? ENTITY_STATUS { get; set; }
+        public int Skip { get; set; }
+        public int Take { get; set; }
+        public int TotalRecord { get; set; }
+        public string CreatedBy { get; set; }
+        public DateTime? CreatedDate { get; set; }
+        public string UpdateBy { get; set; }
+        public DateTime? UpdateDate { get; set; }
+        public int? Status { get; set; }
+        public int? EntityStatus { get; set; }
     }
 }

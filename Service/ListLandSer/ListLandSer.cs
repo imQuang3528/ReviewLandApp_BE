@@ -36,18 +36,18 @@ namespace Service.ListLandSer
 
         public async Task<bool> InsertUpdateListLand(ListLand entity)
         {
-            if (entity.ID_LIST_LAND == null)
+            if (entity.IdListLand == null)
             {
-                entity.ID_LIST_LAND = Guid.NewGuid().ToString();
-                entity.ENTITY_STATUS = 0;
-                entity.ID_CATE_REVIEW = Guid.NewGuid().ToString();
-                entity.CREATED_DATE = DateTime.Now;
-                entity.UPDATED_DATE = DateTime.Now;
+                entity.IdListLand = Guid.NewGuid().ToString();
+                entity.EntityStatus = 0;
+                entity.IdCateReview = Guid.NewGuid().ToString();
+                entity.CreatedDate = DateTime.Now;
+                entity.UpdateDate = DateTime.Now;
             }
             else
             {
-                entity.ENTITY_STATUS = 1;
-                entity.UPDATED_DATE = DateTime.Now;
+                entity.EntityStatus = 1;
+                entity.UpdateDate = DateTime.Now;
             }
             var result = await _listLandRep.SaveListLand(entity);
             return result;

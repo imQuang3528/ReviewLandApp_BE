@@ -11,7 +11,7 @@ namespace Entities.Model
         {
 
         }
-        public string ID { get; set; }
-        public string TITLE { get; set; }
+        public string Id { get; set; }
+        public string Title { get; set; }
     }
 }

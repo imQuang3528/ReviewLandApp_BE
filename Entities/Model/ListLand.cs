@@ -7,8 +7,8 @@ namespace Entities.Model
 {
     public class ListLand:BaseModel
     {
-        public string ID_LIST_LAND { get; set; }
-        public string TITLE { get; set; }
-        public string ID_CATE_REVIEW { get; set; }
+        public string IdListLand { get; set; }
+        public string Title { get; set; }
+        public string IdCateReview { get; set; }
     }
 }

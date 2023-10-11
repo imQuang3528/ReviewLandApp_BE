@@ -1,11 +1,13 @@
-﻿using Newtonsoft.Json;
+﻿using Microsoft.AspNetCore.Http;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 
 namespace Utility
 {
-    public class ConvertUtility
+    public static class ConvertUtility
     {
         public static readonly DateFormatHandling dateFormatHandling = DateFormatHandling.IsoDateFormat;
         public static readonly DateTimeZoneHandling dateTimeZoneHandling = DateTimeZoneHandling.Local;
@@ -20,8 +22,8 @@ namespace Utility
                 DateFormatHandling = dateFormatHandling,
                 DateTimeZoneHandling = dateTimeZoneHandling,
                 DateFormatString = JsonDateFormatString,
-                NullValueHandling=nullValueHandling,
-                ReferenceLoopHandling=referenceLoopHandling
+                NullValueHandling = nullValueHandling,
+                ReferenceLoopHandling = referenceLoopHandling
             };
         }
 
@@ -31,7 +33,7 @@ namespace Utility
             return JsonConvert.SerializeObject(obj, jsonSerializerSettings);
         }
 
-        public static object DeserializeObject(string json,Type type)
+        public static object Deserializer(string json, Type type)
         {
             try
             {
@@ -46,6 +48,22 @@ namespace Utility
                 }
                 throw;
             }
+        }
+
+        public static string FormFileToBase64(IFormFile formFile)
+        {
+            string base64Str = "";
+            if(formFile != null)
+            {
+                base64Str = "data:" + formFile.ContentType + ";base64,";
+                using(MemoryStream ms=new MemoryStream())
+                {
+                    formFile.CopyTo(ms);
+                    var fileBytes=ms.ToArray();
+                    base64Str += Convert.ToBase64String(fileBytes);
+                }
+            }
+            return base64Str;
         }
     }
 }

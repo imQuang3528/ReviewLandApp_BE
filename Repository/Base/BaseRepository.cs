@@ -167,6 +167,7 @@ namespace Repository.Base
                     do
                     {
                         res.Add((await result.ReadAsync(types[index])).ToList());
+                        index++;
                     } while (!result.IsConsumed);
                     return res;
                 }
@@ -199,9 +200,10 @@ namespace Repository.Base
                     do
                     {
                         res.Add((await result.ReadAsync(types[index])).ToList());
+                        index++;
                     } while (!result.IsConsumed);
                     return res;
-                }
+                }  
             }
             catch (Exception ex)
             {
@@ -237,6 +239,14 @@ namespace Repository.Base
             }
         }
 
+        /// <summary>
+        /// Build Param từ Entity
+        /// </summary>
+        /// <param name="proc"></param>
+        /// <param name="conn"></param>
+        /// <param name="trans"></param>
+        /// <param name="entity"></param>
+        /// <returns></returns>
         private DynamicParameters BuildDynamicParametersFromEntity(string proc, SqlConnection conn, SqlTransaction trans, object entity)
         {
             var dynamicParam = new DynamicParameters();
@@ -271,7 +281,14 @@ namespace Repository.Base
         }
 
 
-
+        /// <summary>
+        /// Build param từ dictionary
+        /// </summary>
+        /// <param name="proc"></param>
+        /// <param name="conn"></param>
+        /// <param name="trans"></param>
+        /// <param name="param"></param>
+        /// <returns></returns>
         private DynamicParameters BuildDynamicParametersFromDictionaty(string proc, SqlConnection conn, SqlTransaction trans, Dictionary<string, object> param)
         {
             var dynamicParameters = new DynamicParameters();

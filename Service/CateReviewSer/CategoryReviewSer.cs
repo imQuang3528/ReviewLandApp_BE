@@ -27,24 +27,24 @@ namespace Service.CateReviewSer
             return result;
         }
 
-        public async Task<List<List<object>>> GetListCateReview(int skip,int take,string searchKey)
+        public async Task<List<List<object>>> GetListCateReview(int skip, int take, string searchKey)
         {
-            var result = await _cateReviewRep.GetListCateReview(skip,take,searchKey);
+            var result = await _cateReviewRep.GetListCateReview(skip, take, searchKey);
             return result;
         }
 
         public async Task<bool> SaveCateReview(CategoryReview Entity)
         {
-            if (string.IsNullOrEmpty(Entity.ID))
+            if (string.IsNullOrEmpty(Entity.Id))
             {
-                Entity.ID =Guid.NewGuid().ToString();
-                Entity.CREATED_DATE = DateTime.Now;
-                Entity.ENTITY_STATUS = 0;
+                Entity.Id = Guid.NewGuid().ToString();
+                Entity.CreatedDate = DateTime.Now;
+                Entity.EntityStatus = 0;
             }
             else
             {
-                Entity.ENTITY_STATUS = 1;
-                Entity.UPDATED_DATE = DateTime.Now;
+                Entity.EntityStatus = 1;
+                Entity.UpdateDate = DateTime.Now;
             }
             var result = await _cateReviewRep.SaveCateReview(Entity);
             return result;
